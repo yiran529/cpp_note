@@ -1,0 +1,145 @@
+详情参看菜鸟教程
+
+
+1.基本语法与c语言大致一样
+
+	bool类型：可以显示地用true或false对bool变量赋值，它们是c++的关键字，但是bool类型输出时是用0和1
+
+	函数重载：在同一个作用域内，可以声明几个功能类似的同名函数，但是这些同名函数的形参（个数，类型或
+	顺序）必须不同，不能只有返回类型不同
+
+	运算符重载
+	Eg
+		Box operator+(const Box& b)
+   		   {
+        			 Box box;
+         			box.length = this->length + b.length;
+        			 box.breadth = this->breadth + b.breadth;
+         			box.height = this->height + b.height;
+        			 return box;
+      		}
+
+	Eg2
+		 struct node{
+			int sum,x,y;
+			friend bool operator < (node a,node b){//结构体内定义要加friend
+				if(a.sum==b.sum)return a.x>b.x;//绝对值相等越靠左越优先	
+				else return a.sum>b.sum;//绝对值从小到大
+			}
+		 };
+	但要注意：有一些运算符不能被重载
+
+	引用类型：根据网络资料，引用底层也是使用指针实现的，它和指针一样占用内存空间。引用与指针的区别
+	在于1安全性：引用的对象不能改变2方便性：引用可以视作封装好的指针解引用3级数：引用只有一级4初始化：
+	引用必须被初始化为一个已有对象的引用
+
+	可以使用new运算符为任意的数据类型动态分配内存
+
+	lambda表达式
+
+	结构体内可以由成员函数，构造函数
+
+	在C++11中，auto是用来自动推导表达式或变量的实际类型的。
+
+	decltype与auto关键字一样，用于进行编译时类型推导，不过它与auto还是有一些区别的。decltype的类型推导
+		并不是像auto一样是从变量声明的初始化表达式获得变量的类型，而是总是以一个普通表达式作为参数，
+		返回该表达式的类型,而且decltype并不会对表达式进行求值。
+
+	for的一个特殊用法
+		1.for(int var:nums)//nums是数组
+		2.for(int var:vec)//vec是一个vector，这种方法不能改变容器的值
+
+2.面向对象：与python和java类似(至少表面上），语法有一些不同
+
+	__init__   →    构造函数的含义及其语法
+	与构造函数相对应的是类的析构函数，它会在每次删除所创建的对象时执行。析构函数的名称与类的名称
+		是完全相同的，只是在前面加了个波浪号（~）作为前缀，它不会返回任何值，也不能带有任何参数。
+		析构函数有助于在跳出程序（比如关闭文件、释放内存等）前释放资源。
+
+	对象同样可以作为函数的参数与返回值
+
+	类访问修饰符
+
+	this指针，有点像python中的self。在c++中，每一个对象都能通过this指针来访问自己的地址，
+		this是一个隐藏的指针，可以在类的成员函数中使用，它可以用来指向调用对象，当一个
+		对象的成员函数被调用时，编译器会隐式地传递该对象的地址作为this指针。通过使用 this 指针，
+		我们可以在成员函数中访问当前对象的成员变量，即使它们与函数参数或局部变量同名，这样
+		可以避免命名冲突，并确保我们访问的是正确的变量。
+
+	指向类的指针：一个指向 C++ 类的指针与指向结构的指针类似，访问指向类的指针的成员，需要使用
+		成员访问运算符 ->，就像访问指向结构的指针一样。与所有的指针一样，您必须在使用指针
+		之前，对指针进行初始化。
+		如果用类实现链表，就要使用指向类的指针
+
+	拷贝构造函数
+
+	友元函数：类的友元函数是定义在类外部，但有权访问类的所有私有（private）成员和保护（protected）成员。
+		尽管友元函数的原型有在类的定义中出现过，但是友元函数并不是成员函数。友元可以是一个函数，
+		该函数被称为友元函数；友元也可以是一个类，该类被称为友元类，在这种情况下，整个类及其所有成员都是友元。
+		如果要声明函数为一个类的友元，需要在类定义中该函数原型前使用关键字 friend
+
+
+3.资源库与一些特殊的东西
+
+命名空间
+	理解using namespace std; // using namespace first_namespace;
+	using std:vector;//using std:cout;
+	vector<int>::iterator v=vec.begin();
+
+STL：标准模板库(Standard Template Library)   包含容器，算法和迭代器
+容器包括：顺序容器，关联容器，容器适配器
+STL是标准库的子集，占比约80%
+
+vector:它与数组十分相似，唯一不同的是，向量在需要扩展大小的时候，会自动处理它自己的存储需求
+基本用法：#include<vector>
+	using namespace std;
+	vector<int> vec;
+	vec.size();//可以用这个信息并结合下标对vector进行遍历
+	只有vector某位置已经存在元素时，才可以用下标去赋值/改值
+	有push_back pop_back但没有push_front pop_front
+
+list:底层实现是双向链表
+	list<int> new_list={1,2,3,4}//list<int> new_list{1,2,3,4}
+	一些成员函数
+
+deque 与list类似：双端队列，可在队首尾插入与删除。（而queue只能在队尾插入，在队首删除）
+deque由一段段连续小空间拼接而成，小空间之间不连续
+
+将一个容器对象赋值给另一个对象，或将一个容器对象传参进入函数，它们之间的改变不会相互影响
+	也可以将一个容器对象作为函数的返回值
+
+stack与queue:以deque为底层实现
+
+priority_queue:优先级高的元素首先弹出 用#include<queue>
+priority_queue<int> q;
+priority_queue<int,vector<int>,greater<int>>q;
+priority_queue<int,deque<int>,less<int>>q; 
+容器不能是list，默认是vector
+自定义比较规则：Eg. priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> que(cmp);
+
+map与set：是有序结构，用平衡二叉树实现，操作花费O(logn)
+	#include<map>
+	map<string,int> maps;
+	map["kk"]=10;
+	插入方法
+	查找元素
+	......
+
+	#include<set>
+	set<int> s;
+	s.insert(1);
+	s.find(x);//返回值类型为迭代器
+	s.begin()//默认指向最小的元素，除非在构造时自定义比较规则
+	set不允许重复，可用以过滤重复的元素，multiset允许重复
+
+unoerder_set:无序，底层实现为哈希
+
+pair：底层原理是结构体
+	pair类型的默认比较规则是先比第一个数，再比第二个数
+
+iterator： vector<int> vtr;
+	vector<int>::iterator it=vtr.begin();
+	it++; it--;
+	*it//很多操作与指针类似
+	根据网络资料，迭代器是对”遍历容器“这一操作的封装，便于不用修改代码而可以
+		遍历各种不同的数据结构
