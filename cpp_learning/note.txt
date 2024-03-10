@@ -77,6 +77,29 @@
 		尽管友元函数的原型有在类的定义中出现过，但是友元函数并不是成员函数。友元可以是一个函数，
 		该函数被称为友元函数；友元也可以是一个类，该类被称为友元类，在这种情况下，整个类及其所有成员都是友元。
 		如果要声明函数为一个类的友元，需要在类定义中该函数原型前使用关键字 friend
+	
+	运算符重载的例子（来自于chatgpt）：
+		
+
+		class Student {
+			private:
+   			 	std::string name;
+    				int score;
+			public:
+    				Student(std::string name, int score) : name(name), score(score) {}
+
+    					// 重载小于运算符，用于比较学生对象的成绩
+   				 bool operator<(const Student& other) const {
+        				return score < other.score;
+    				}
+
+    					// 可选：重载大于运算符
+   				 bool operator>(const Student& other) const {
+       					 return score > other.score;
+   				 }
+			};
+	
+		或 bool operator<(Node p, Node q) { return p.f > q.f; } //不在类或结构体里面
 
 
 3.资源库与一些特殊的东西

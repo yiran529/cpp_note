@@ -1,0 +1,68 @@
+在 C++ 中，`this` 指针是一个指向当前对象的指针。它可以在类的成员函数中使用，用来访问当前对象的成员变量和成员函数。`this` 指针的主要作用包括：
+
+1. **区分同名的成员变量和局部变量**：当成员变量和局部变量同名时，可以使用 `this` 指针来明确指示访问的是成员变量还是局部变量。
+
+   ```cpp
+   class MyClass {
+   private:
+       int value;
+
+   public:
+       void setValue(int value) {
+           // 使用 this 指针区分成员变量和局部变量
+           this->value = value;
+       }
+   };
+   ```
+
+2. **在成员函数中返回当前对象**：有时候，在成员函数中需要返回当前对象，可以使用 `this` 指针来实现。
+
+   ```cpp
+   class MyClass {
+   private:
+       int value;
+
+   public:
+       MyClass(int value) : value(value) {}
+
+       // 返回当前对象
+       MyClass* getThis() {
+           return this;
+       }
+   };
+   ```
+
+3. **在成员函数中传递当前对象**：有时候，需要在成员函数之间传递当前对象，可以使用 `this` 指针来作为参数传递。
+
+   ```cpp
+   class MyClass {
+   private:
+       int value;
+
+   public:
+       MyClass(int value) : value(value) {}
+
+       // 在成员函数中传递当前对象
+       void anotherFunction() {
+           someOtherFunction(this);
+       }
+
+       void someOtherFunction(MyClass* obj) {
+           // 使用 obj 访问当前对象的成员变量和方法
+       }
+   };
+   ```
+
+总之，`this` 指针提供了一种简洁而方便的方式来访问当前对象的成员，以及在成员函数中传递和返回当前对象。
+
+
+this及返回自身对象的引用
+this:调用成员函数的时候，编译器负责把对象地址传（&myTime）递给成员函数中隐藏的this形参。
+在系统角度来看，任何对类成员的直接访问都是被this隐式调用的。
+
+this有个const修饰符，只能用来指向已确定的那个对象，不能更改。
+this只能在成员函数中使用，全局函数静态函数不能使用this。
+在成员普通函数中，this是一个指向非const对象的const指针。（this 等价于 Time *const this,const修饰this，this不能指向其他对象，但this指向的对象中的成变量可以被修改。）
+在const成员函数中，this指针是一个指向const对象的const指针（this 等价于 const Time * const this）。
+
+python 一定要显式地写出self.

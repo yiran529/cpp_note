@@ -1,0 +1,15 @@
+以下所有代码都有使用Sleep（）延时函数，需 #include <Windows.h>
+
+1.使用clock()，ms级别计时器 ：
+
+        double start = clock();
+	Sleep(1000);
+	double end = clock();
+	double last = start - end;
+	cout << last << "ms" << endl;
+使用时需要包含头文件<ctime>
+————————————————
+
+                            版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+                        
+原文链接：https://blog.csdn.net/qq_40692109/article/details/103164916

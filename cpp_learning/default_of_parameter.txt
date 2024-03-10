@@ -1,0 +1,27 @@
+是的，C++ 中的函数可以设置参数的默认值。设置参数的默认值意味着在调用函数时，如果不提供该参数的值，那么函数将使用默认值作为参数值。
+
+以下是一个示例：
+
+```cpp
+#include <iostream>
+
+// 函数声明，参数有默认值
+void printMessage(std::string message = "Hello, World!");
+
+int main() {
+    // 调用函数时不提供参数值，将使用默认值
+    printMessage();  // 输出: Hello, World!
+    
+    // 提供参数值，将使用提供的值
+    printMessage("Welcome!");  // 输出: Welcome!
+
+    return 0;
+}
+
+// 函数定义，参数有默认值
+void printMessage(std::string message) {
+    std::cout << message << std::endl;
+}
+```
+
+在这个示例中，`printMessage` 函数有一个 `message` 参数，并设置了默认值为 `"Hello, World!"`。当我们调用 `printMessage` 函数时，如果没有提供参数值，则函数将使用默认值输出；如果提供了参数值，则函数将使用提供的参数值输出。
