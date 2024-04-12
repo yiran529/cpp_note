@@ -1,0 +1,17 @@
+unordered_map与unordered_set底层实现为哈希表，速度远快于map与set
+如果要存储元素为结构体，那么结构体就要重载==运算符，并且要写一个hash函数，具体案例见下:
+struct Node {
+     Node() {}
+    Node(int _x, int _y):x(_x), y(_y) {}
+     int x, y;
+     bool operator == (const Node &t) const {
+         return  x==t.x && y==t.y;
+     }
+ };
+ struct NodeHash {
+     std::size_t operator () (const Node &t) const {
+         return  t.x * 100 + t.y;
+     }
+ };
+ unordered_set <Node, NodeHash> h_set;
+ unordered_map <Node, string, NodeHash> h_map;
